@@ -1,0 +1,150 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Tue Jul 21 15:39:54 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A033@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> create table employee(
+  2  empid number(10),
+  3  emp_name varchar(250),
+  4  gender char,
+  5  DOB date
+  6  );
+create table employee(
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> create table employee1(
+  2  empid number(10),
+  3  emp_name varchar(250),
+  4  gender char,
+  5  DOB date
+  6  );
+
+Table created.
+
+SQL> desc employee1
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPID                                              NUMBER(10)
+ EMP_NAME                                           VARCHAR2(250)
+ GENDER                                             CHAR(1)
+ DOB                                                DATE
+
+SQL> create table employee2 as select * from employee1;
+
+Table created.
+
+SQL> desc employee2
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPID                                              NUMBER(10)
+ EMP_NAME                                           VARCHAR2(250)
+ GENDER                                             CHAR(1)
+ DOB                                                DATE
+
+SQL> create table employee2 as select empid,emp_name from employee1
+  2
+SQL> insert into employee1 values( 101,'dhana','f',12may2006');
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> insert into employee1 values( 101,'dhana','f','12may2006');
+
+1 row created.
+
+SQL> select * from employee1;
+
+     EMPID
+----------
+EMP_NAME
+--------------------------------------------------------------------------------
+G DOB
+- ---------
+       101
+dhana
+f 12-MAY-06
+
+
+SQL> create table employee2 as select * from employee1 where 1>2;
+create table employee2 as select * from employee1 where 1>2
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> insert into employee1 values(102,'bhuna','f','13may2007');
+
+1 row created.
+
+SQL> select * from employee1;
+
+     EMPID
+----------
+EMP_NAME
+--------------------------------------------------------------------------------
+G DOB
+- ---------
+       101
+dhana
+f 12-MAY-06
+
+       102
+bhuna
+f 13-MAY-07
+
+     EMPID
+----------
+EMP_NAME
+--------------------------------------------------------------------------------
+G DOB
+- ---------
+
+
+SQL> create table employee11 as select EMPID from employee1 where 2>3;
+
+Table created.
+
+SQL> select * from employee11;
+
+no rows selected
+
+SQL> insert into employee1(&EMPID,&EMP_NAME,&GENDER);
+Enter value for empid: 12
+Enter value for emp_name: dhana
+Enter value for gender: f
+old   1: insert into employee1(&EMPID,&EMP_NAME,&GENDER)
+new   1: insert into employee1(12,dhana,f)
+insert into employee1(12,dhana,f)
+                      *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> SELECT
+  2  COUNT(*)
+  3  FROM employee1;
+
+  COUNT(*)
+----------
+         2
+
+SQL>
+
+
+
+
+
+
+
+
+
+
