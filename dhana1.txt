@@ -1,0 +1,255 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Tue Jul 28 15:04:59 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A033@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> Create table Employee(
+  2  Empno Number(4) Constraint Emp_pkeyPrimary Key,
+  3  Ename Varchar2(20),
+  4  JOB Date,
+  5  Sal Number(5));
+Empno Number(4) Constraint Emp_pkeyPrimary Key,
+                *
+ERROR at line 2:
+ORA-02253: constraint specification not allowed here
+
+
+SQL> Create table Employee(
+  2  Empno Number(4) Constraint Emp_pkeyPrimary Key,
+  3  Ename Varchar2(20),
+  4  JOB Date,
+  5
+SQL> create table student(
+  2
+SQL> Create table Employee(
+  2  Empno Number(4),
+  3  Ename Varchar2(20),
+  4  Job Date,
+  5  sal Number(5));
+Create table Employee(
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> Create table student(
+  2  regno Varchar(20),
+  3  Name char(10),
+  4  Year Number(5),
+  5  Course char(10));
+
+Table created.
+
+SQL> desc student
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                              VARCHAR2(20)
+ NAME                                               CHAR(10)
+ YEAR                                               NUMBER(5)
+ COURSE                                             CHAR(10)
+
+SQL> create Table student1 as select * from student
+  2
+SQL> create Table student1 as select * from student;
+
+Table created.
+
+SQL> desc student1
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                              VARCHAR2(20)
+ NAME                                               CHAR(10)
+ YEAR                                               NUMBER(5)
+ COURSE                                             CHAR(10)
+
+SQL> create table student2 as select regno,name,year,course from student;
+
+Table created.
+
+SQL> desc student2
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                              VARCHAR2(20)
+ NAME                                               CHAR(10)
+ YEAR                                               NUMBER(5)
+ COURSE                                             CHAR(10)
+
+SQL> insert into student values(33,'dhana',3,'cse');
+
+1 row created.
+
+SQL> select * from student;
+
+REGNO                NAME             YEAR COURSE
+-------------------- ---------- ---------- ----------
+33                   dhana               3 cse
+
+SQL> create table as select * from student where 1>2;
+create table as select * from student where 1>2
+             *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> create table student3 as select * from student whwre 1>2;
+create table student3 as select * from student whwre 1>2
+                                                     *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> create table student3 as select * from student where 1>2;
+
+Table created.
+
+SQL> desc student3
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                              VARCHAR2(20)
+ NAME                                               CHAR(10)
+ YEAR                                               NUMBER(5)
+ COURSE                                             CHAR(10)
+
+SQL> create table student4 as select * from student;
+
+Table created.
+
+SQL> select * from student4
+  2
+SQL> select * from student4;
+
+REGNO                NAME             YEAR COURSE
+-------------------- ---------- ---------- ----------
+33                   dhana               3 cse
+
+SQL> create table student5 as select regno,name,year,course from student where 1>2;
+
+Table created.
+
+SQL> select * from student5;
+
+no rows selected
+
+SQL> create table student6 as select name,regno,year.course from student;
+create table student6 as select name,regno,year.course from student
+                                           *
+ERROR at line 1:
+ORA-00904: "YEAR"."COURSE": invalid identifier
+
+
+SQL> create table student6 as select regno,name,year,course from student;
+
+Table created.
+
+SQL> select * from student6;
+
+REGNO                NAME             YEAR COURSE
+-------------------- ---------- ---------- ----------
+33                   dhana               3 cse
+
+SQL> alter table student modify name Varchar2(20);
+
+Table altered.
+
+SQL> alter table student modify regno Varchar2(20),design Varchar2(10);
+alter table student modify regno Varchar2(20),design Varchar2(10)
+                                             *
+ERROR at line 1:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> rename student6 to studentsix
+  2  rename student6 to studentsix;
+rename student6 to studentsix
+*
+ERROR at line 2:
+ORA-00933: SQL command not properly ended
+
+
+SQL> alter table student6 rename to student7;
+
+Table altered.
+
+SQL> insert into student(regno,name,year,course)values(34,'uma',3,cse);
+insert into student(regno,name,year,course)values(34,'uma',3,cse)
+                                                             *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into student values(34,'uma',3,'cse');
+
+1 row created.
+
+SQL> select * from student;
+
+REGNO                NAME                       YEAR COURSE
+-------------------- -------------------- ---------- ----------
+33                   dhana                         3 cse
+34                   uma                           3 cse
+
+SQL> insert into student5 values(regno,'name',year,course);
+insert into student5 values(regno,'name',year,course)
+                                              *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into student2 select 8 from student5;
+insert into student2 select 8 from student5
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> insert into student2 select * from student6;
+insert into student2 select * from student6
+                                   *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> insert into student7(regno,name,year,course)select regno,name,year,course from student;
+
+2 rows created.
+
+SQL> select * from student7;
+
+REGNO                NAME             YEAR COURSE
+-------------------- ---------- ---------- ----------
+33                   dhana               3 cse
+33                   dhana               3 cse
+34                   uma                 3 cse
+
+SQL> update student7 set regno=34 where course=eee;
+update student7 set regno=34 where course=eee
+                                          *
+ERROR at line 1:
+ORA-00904: "EEE": invalid identifier
+
+
+SQL> update student7 set regno=34 where course=eee
+  2  update student7 set regno=34 where course=eee
+  3
+SQL>
+SQL> update student7 set regno=34 where course=cse
+  2
+SQL> drop table student6
+  2  drop table student6;
+drop table student6
+*
+ERROR at line 2:
+ORA-00933: SQL command not properly ended
+
+
+SQL> drop table student5;
+
+Table dropped.
+
+SQL>
