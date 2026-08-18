@@ -1,0 +1,55 @@
+SQL> create table student34(
+  2  regno number(10),
+  3  name varchar(10),
+  4  year number(3),
+  5  course_id varchar(11)
+  6  );
+
+Table created.
+
+SQL> desc student34
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                              NUMBER(10)
+ NAME                                               VARCHAR2(10)
+ YEAR                                               NUMBER(3)
+ COURSE_ID                                          VARCHAR2(11)
+
+SQL> insert into student34 values(101,'dhana',1,'cse');
+
+1 row created.
+
+SQL> insert into student34 values(102,'uma',2,'ece');
+
+1 row created.
+
+SQL> insert into student34 values(103,'kalyani',3,'mech');
+
+1 row created.
+
+SQL> select * from student34;
+
+     REGNO NAME             YEAR COURSE_ID
+---------- ---------- ---------- -----------
+       101 dhana               1 cse
+       102 uma                 2 ece
+       103 kalyani             3 mech
+
+SQL> select regno,name,course_name loc from student34,course5;
+
+     REGNO NAME       LOC
+---------- ---------- -----
+       101 dhana      CSE
+       102 uma        CSE
+       103 kalyani    CSE
+       101 dhana      ECE
+       102 uma        ECE
+       103 kalyani    ECE
+
+6 rows selected.
+select regno,name,course5.course_id loc from student34,course5 where student34.course_id=course5.course_id;
+
+     REGNO NAME              LOC
+---------- ---------- ----------
+       101 dhana             101
+       102 uma               102
